@@ -26,7 +26,6 @@ function App() {
         let newTasks = [task, ...tasks];
         setAllTasks({...tasksAll})
     }
-
     function changeStatus(taskId: string, isDone: boolean,todoID:string) {
         let tasks = tasksAll[todoID]
         let task = tasks.find(t => t.id === taskId);
@@ -37,7 +36,6 @@ function App() {
         }
 
     }
-
     function changeFilter(value: FilterValuesType, idTODO:string) {
         const todolist = tasksTodoID.find(todo => todo.id === idTODO)
             if (todolist){
@@ -45,8 +43,15 @@ function App() {
                 setTodoId([...tasksTodoID])
             }
     }
-    /*let [filter, setFilter] = useState<FilterValuesType>('all');*/
+    function todolistRemoveTasks  (todoID:string)  {
+        let tasksAl = tasksTodoID
+        let filteredTask = tasksAl.filter(f => f.id !== todoID)
+        tasksAl = filteredTask
+        setTodoId(tasksAl)
 
+
+    }
+    /*let [filter, setFilter] = useState<FilterValuesType>('all');*/
     const todoListId1 = v1()
     const todoListId2 = v1()
     const [tasksTodoID, setTodoId] = useState<TodoListType[]>( [
@@ -94,6 +99,7 @@ function App() {
                             addTask={addTask}
                             changeTaskStatus={changeStatus}
                             filter={todo.filter}
+                            todolistRemoveTasks={todolistRemoveTasks}
                         />
                     )
                 })
