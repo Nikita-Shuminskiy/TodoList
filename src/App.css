@@ -1,7 +1,13 @@
+
+body {
+  background: burlywood;
+}
+/*
 .App {
   padding: 30px;
   display: flex;
 }
+*/
 
 .App > div {
   margin-right: 50px;
@@ -11,7 +17,7 @@
   border: red 1px solid;
 }
 
-.error-message {
+.errorMessage {
   color: red;
 }
 
@@ -21,4 +27,5 @@
 
 .is-done {
   opacity: 0.5;
+
 }
