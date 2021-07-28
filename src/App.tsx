@@ -39,7 +39,7 @@ function App() {
         {id: todolist2, title: 'New-Todo', filter: 'all'}
     ])
 
- /*   function removeTask(id: string, todoId: string) {
+    function removeTask(id: string, todoId: string) {
         let todolistTask = tasks[todoId]
         tasks[todoId] = todolistTask.filter(t => t.id != id)
         setTasks({...tasks})
@@ -68,8 +68,8 @@ function App() {
             setTodolist([...todolists])
         }
 
-    }*/
-   /* function delTask(id: string) {
+    }
+    function delTask(id: string) {
         setTodolist(todolists.filter(t => t.id != id))
         delete tasks[id]
         setTasks({...tasks})
@@ -100,7 +100,7 @@ function App() {
             todolist.title = newTitle
             setTodolist([...todolists])
         }
-    }*/
+    }
 
     const todoListsWrapper = todolists.map(t => {
         let allTaskForTodoList = tasks[t.id]
