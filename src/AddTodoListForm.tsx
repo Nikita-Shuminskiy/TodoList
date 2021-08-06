@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
+import React, { ChangeEvent, useState, KeyboardEvent, useCallback } from 'react';
 import { IconButton, TextField } from '@material-ui/core';
 import './App.css';
 import { AddBox } from '@material-ui/icons';
@@ -8,22 +8,24 @@ export type AddItemFormType = {
     addItem: (title: string) => void
 }
 
-export function AddItemTaskForm(props: AddItemFormType) {
+export const AddTodoListForm = React.memo(function({addItem}: AddItemFormType) {
+    console.log('AddTODO--FORMA')
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
     const addTask = () => {
         if (title.trim() !== '') {
-            props.addItem(title.trim());
+            addItem(title.trim());
             setTitle('');
         } else {
             setError('Title is required');
         }
     }
+
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
         setError('')
-
     }
+
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
         if (e.charCode === 13) {
@@ -31,7 +33,7 @@ export function AddItemTaskForm(props: AddItemFormType) {
         }
     }
     return (
-        <div>
+        <div style={{ marginTop:'20px' }}>
             <TextField
                 value={title}
                 onChange={onChangeHandler}
@@ -51,4 +53,4 @@ export function AddItemTaskForm(props: AddItemFormType) {
         </div>
     )
 
-}
+})

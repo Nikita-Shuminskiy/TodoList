@@ -1,12 +1,11 @@
 import { v1 } from 'uuid';
 import {
-    ActionType, addTodolistAC,
-    ChangeFilterTodoListAC,
+     addTodolistAC,
     removeTodolistAC,
     todolistChangeTitleAC, TodolistChangeTitleType,
     todoListReducer
 } from './todoList-reducer';
-import { FilterValuesType, TodoListType } from '../AppRudux';
+import { TodoListType } from '../AppRudux';
 
 
 
@@ -54,24 +53,6 @@ test('correct todolist should change its name', () => {
 
     expect(endState[0].title).toBe('What to learn');
     expect(endState[1].title).toBe(newTodolistTitle);
-});
-
-
-test('correct filter of todolist should be changed', () => {
-
-    let newFilter: FilterValuesType = 'completed';
-
-
-    const action: ActionType = {
-        type: 'CHANGE-TODOLIST-FILTER',
-        id: todolistId2,
-        filter: newFilter
-    };
-
-    const endState = todoListReducer(startState, ChangeFilterTodoListAC(todolistId2, newFilter));
-
-    expect(endState[0].filter).toBe('all');
-    expect(endState[1].filter).toBe(newFilter);
 });
 
 

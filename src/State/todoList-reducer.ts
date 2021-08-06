@@ -1,7 +1,7 @@
 import { v1 } from 'uuid';
 import { FilterValuesType, TodoListType } from '../AppRudux';
 
-export type ActionType = RemoveTodoType | AddTodolistType | TodolistChangeTitleType | ChangeFilterTodoListType
+export type ActionType = RemoveTodoType | AddTodolistType | TodolistChangeTitleType | changeTodoListFilterType
 
 
 export type RemoveTodoType = { type: 'REMOVE-TODOLIST', id: string }
@@ -12,11 +12,12 @@ export type TodolistChangeTitleType = {
     id: string
 
 }
-type ChangeFilterTodoListType = {
-    type: 'CHANGE-TODOLIST-FILTER'
-    id: string
-    filter: FilterValuesType
-};
+export type changeTodoListFilterType = {
+    type: 'FILTER-TODOLIST'
+    todolistId: string
+    value: FilterValuesType
+
+}
 
 export const removeTodolistAC = (id: string): RemoveTodoType => {
     return {type: 'REMOVE-TODOLIST', id}
@@ -29,9 +30,10 @@ export const addTodolistAC = (title: string): AddTodolistType => {
 export const todolistChangeTitleAC = (title: string, id: string): TodolistChangeTitleType => {
     return {type: 'CHANGE-TODOLIST-TITLE', title, id}
 }
-export const ChangeFilterTodoListAC = (id: string, filter: FilterValuesType): ChangeFilterTodoListType => {
-    return {type: 'CHANGE-TODOLIST-FILTER', id, filter}
+export const changeTodoListFilterTypeAC = (todolistId: string, value: FilterValuesType): changeTodoListFilterType => {
+    return {type: 'FILTER-TODOLIST',todolistId,value }
 }
+
 let initialState: TodoListType[] = []
 export const todoListReducer = (state = initialState, action: ActionType): TodoListType[] => {
     const stateCopy = [...state]
@@ -55,13 +57,13 @@ export const todoListReducer = (state = initialState, action: ActionType): TodoL
             }
             return stateCopy
         }
-
-        case 'CHANGE-TODOLIST-FILTER': {
-            const todo = stateCopy.find(f => f.id === action.id)
-            if (todo) {
-                todo.filter = action.filter
+        case 'FILTER-TODOLIST': {
+            return state = state.map(tl => tl.id === action.todolistId ? {...tl, filter: action.value} : tl)
+            /*const todolist = state.find(tl => tl.idTodoList === action.todolistId);
+            if (todolist) {
+                todolist.filter = action.value;
             }
-            return stateCopy
+            return [...state]*/
         }
 
         default:

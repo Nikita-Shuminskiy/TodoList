@@ -7,9 +7,9 @@ import {
     taskReducer
 } from './task-reducer';
 import { removeTodolistAC } from './todoList-reducer';
-import { todoTaskType } from '../AppRudux';
+import { TodoTaskType } from '../AppRudux';
 
-let startState: todoTaskType = {}
+let startState: TodoTaskType = {}
 beforeEach(() => {
     startState = {
         'todolistId1': [
