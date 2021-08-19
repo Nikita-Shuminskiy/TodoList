@@ -37,7 +37,7 @@ export const Tasks = React.memo(( {todoId,taskId,removeTask,changeTaskStatus,cha
             color="primary"
             onChange={onChangeHandlerWrapper}
         />
-        <EditInput title={titleEditInput} onChange={onChangeInputValueWrapper}/>
+        <EditInput isDone={isDone} title={titleEditInput} onChange={onChangeInputValueWrapper}/>
         <IconButton
             onClick={removeTaskWrapper}
             size={'small'}

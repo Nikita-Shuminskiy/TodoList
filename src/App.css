@@ -27,5 +27,10 @@ body {
 
 .is-done {
   opacity: 0.5;
-
 }
+.span-strikeout{
+  text-decoration:line-through;
+  color: red;
+  font-weight: bolder;
+}
+

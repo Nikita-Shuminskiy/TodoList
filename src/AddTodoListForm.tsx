@@ -12,12 +12,15 @@ export const AddTodoListForm = React.memo(function({addItem}: AddItemFormType) {
     console.log('AddTODO--FORMA')
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
+
+    const textError = 'Title is required'
+
     const addTask = () => {
         if (title.trim() !== '') {
             addItem(title.trim());
             setTitle('');
         } else {
-            setError('Title is required');
+            setError(textError);
         }
     }
 
@@ -33,7 +36,7 @@ export const AddTodoListForm = React.memo(function({addItem}: AddItemFormType) {
         }
     }
     return (
-        <div style={{ marginTop:'20px' }}>
+        <div style={{ marginTop:'20px',marginBottom: '17px' }}>
             <TextField
                 value={title}
                 onChange={onChangeHandler}

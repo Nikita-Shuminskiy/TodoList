@@ -77,7 +77,6 @@ export const Todolist = React.memo(function (props: PropsType) {
                 style={{backgroundColor: 'red'}}
                 size={'medium'}
                 variant={props.filter === 'all' ? 'outlined' : 'contained'}
-                /*  color={props.filter === 'all' ? 'secondary' : 'primary'}*/
                 onClick={onAllClickHandlerWrapper}>All</Button>
             <Button
                 variant={props.filter === 'active' ? 'outlined' : 'contained'}

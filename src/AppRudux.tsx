@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import './App.css';
 import { Todolist } from './Todolist';
 import { AddTodoListForm } from './AddTodoListForm';
-import { AppBar, IconButton, Typography, Button, Toolbar, Container, Grid, Paper } from '@material-ui/core';
+import { AppBar, Typography, Button, Toolbar, Container, Grid, Paper } from '@material-ui/core';
 import { MenuOpen } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './Store/Store';
@@ -13,8 +13,10 @@ import {
     todolistChangeTitleAC
 } from './State/todoList-reducer';
 import { changeTodoListFilterTypeAC } from '../src/State/todoList-reducer';
+import { CreateTodolist, GetTodolists, UpdateTodolistTitle } from './Stories/todoLists';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
+
 export type TodoListType = {
     id: string
     title: string
@@ -29,10 +31,12 @@ export type TaskType = {
     isDone: boolean
 }
 
-const AppRedux = React.memo(function() {
+const AppRedux = React.memo(function () {
     console.log('App-Redux')
     const todolists = useSelector<AppRootStateType, TodoListType[]>(state => state.todolists)
+
     const tasks = useSelector<AppRootStateType, TodoTaskType>(state => state.tasks)
+
     const dispatch = useDispatch()
 
 
@@ -78,6 +82,7 @@ const AppRedux = React.memo(function() {
         dispatch(action)
     }, [dispatch])
 
+
     const todoListsWrapper = todolists.map(todo => {
         let allTaskForTodoList = tasks[todo.id]
         let tasksForTodolist = allTaskForTodoList;
@@ -104,10 +109,13 @@ const AppRedux = React.memo(function() {
 
     return (
         <div className="App">
-            <AppBar position="static">
-                <Toolbar style={{justifyContent: 'space-between'}}>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
-                    </IconButton>
+            <AppBar style={{background: '#3F5172', color: 'white'}} position="static">
+                <Toolbar style={{
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                }}>
+                    {/*<IconButton edge="start" color="inherit" aria-label="menu">
+                    </IconButton>*/}
                     <MenuOpen/>
                     <Typography variant="h6">
                         MY TODOLIST :)
@@ -125,6 +133,9 @@ const AppRedux = React.memo(function() {
                     {todoListsWrapper}
                 </Grid>
             </Container>
+            <CreateTodolist/>
+            <GetTodolists/>
+            <UpdateTodolistTitle/>
 
         </div>
 

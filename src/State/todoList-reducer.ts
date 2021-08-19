@@ -5,7 +5,9 @@ export type ActionType = RemoveTodoType | AddTodolistType | TodolistChangeTitleT
 
 
 export type RemoveTodoType = { type: 'REMOVE-TODOLIST', id: string }
+
 export type AddTodolistType = { type: 'ADD-TODOLIST', title: string, todolistId: string }
+
 export type TodolistChangeTitleType = {
     type: 'CHANGE-TODOLIST-TITLE'
     title: string
@@ -16,7 +18,6 @@ export type changeTodoListFilterType = {
     type: 'FILTER-TODOLIST'
     todolistId: string
     value: FilterValuesType
-
 }
 
 export const removeTodolistAC = (id: string): RemoveTodoType => {
@@ -67,6 +68,6 @@ export const todoListReducer = (state = initialState, action: ActionType): TodoL
         }
 
         default:
-            return stateCopy
+            return state
     }
 }
