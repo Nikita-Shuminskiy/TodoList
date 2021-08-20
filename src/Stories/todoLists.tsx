@@ -7,8 +7,6 @@ export default {
 
 
 
-
-
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
@@ -44,12 +42,12 @@ export const DeleteTodolist = () => {
 }
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
-    const title = 'asasasasasa'
-    const todoId = 'e96f3a07-ba38-4431-a66d-1d77f2f90d33'
+    const title = 'asasasadsdsdsdsdsdsdsdsdsdsdsdsdssasa'
+    const todoId = "7b2cd17a-b6bd-44cf-97ef-f59b0b244555"
     useEffect(() => {
         todoLists.updTodoLists(todoId, title)
-            .then((res) => {
-                setState(res.data);
+            .then((response) => {
+                setState(response.data);
             })
     }, [])
 

@@ -14,6 +14,7 @@ import {
 } from './State/todoList-reducer';
 import { changeTodoListFilterTypeAC } from '../src/State/todoList-reducer';
 import { CreateTodolist, GetTodolists, UpdateTodolistTitle } from './Stories/todoLists';
+import { GetTask } from './Stories/taskList';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -133,9 +134,7 @@ const AppRedux = React.memo(function () {
                     {todoListsWrapper}
                 </Grid>
             </Container>
-            <CreateTodolist/>
-            <GetTodolists/>
-            <UpdateTodolistTitle/>
+        <GetTask/>
 
         </div>
 
