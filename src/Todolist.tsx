@@ -1,10 +1,11 @@
-import React, { ChangeEvent, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { AddTodoListForm } from './AddTodoListForm';
 import { EditInput } from './EditInput';
-import { Button, Checkbox, IconButton } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import { FilterValuesType, TaskType } from './AppRudux';
 import { Tasks } from './Tasks';
+import { FilterValuesType } from './State/todoList-reducer';
+import { TaskStatuses, TaskType } from './Api/TaskListApi';
 
 type PropsType = {
     titleTodoList: string
@@ -12,7 +13,7 @@ type PropsType = {
     removeTask: (taskId: string, todoId: string) => void
     changeFilterTasks: (todolistId: string, value: FilterValuesType) => void
     addTask: (title: string, todoId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean, todoId: string) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses, todoId: string) => void
     changeTaskValueNew: (taskId: string, valueNew: string, todoId: string) => void
     filter: FilterValuesType
     idTodoList: string
@@ -44,10 +45,10 @@ export const Todolist = React.memo(function (props: PropsType) {
 
     let tasksForTodolist = props.tasks
     if (props.filter === 'active') {
-        tasksForTodolist = props.tasks.filter(t => t.isDone === !true);
+        tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (props.filter === 'completed') {
-        tasksForTodolist = props.tasks.filter(t => t.isDone === !false);
+        tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
     return <div>
@@ -67,7 +68,7 @@ export const Todolist = React.memo(function (props: PropsType) {
                            changeTaskValueNew={props.changeTaskValueNew}
                            titleEditInput={t.title}
                             taskId={t.id}
-                            isDone={t.isDone}/>
+                            status={t.status}/>
                   </div>
                 })
             }

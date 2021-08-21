@@ -2,27 +2,26 @@ import React, { ChangeEvent, useCallback } from 'react';
 import { Checkbox, IconButton } from '@material-ui/core';
 import { EditInput } from './EditInput';
 import { Delete } from '@material-ui/icons';
-import { useSelector } from 'react-redux';
-import { AppRootStateType } from './Store/Store';
-import { TodoListType, TodoTaskType } from './AppRudux';
+import { TaskStatuses } from './Api/TaskListApi';
 
 
 export type TasksComponentType = {
     todoId:string
     taskId:string
     removeTask: (taskId: string, todoId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean, todoId: string) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses, todoId: string) => void
     changeTaskValueNew: (taskId: string, valueNew: string, todoId: string) => void
     titleEditInput:string
-    isDone:boolean
+    status:TaskStatuses
 }
 
-export const Tasks = React.memo(( {todoId,taskId,removeTask,changeTaskStatus,changeTaskValueNew,titleEditInput,isDone}:TasksComponentType ) => {
+export const Tasks = React.memo(( {todoId,taskId,removeTask,changeTaskStatus,changeTaskValueNew,titleEditInput,status}:TasksComponentType ) => {
 
     console.log('Task-Component')
 
     const onChangeHandlerWrapper = useCallback ((e: ChangeEvent<HTMLInputElement>) => {
-        changeTaskStatus(taskId, e.currentTarget.checked, todoId)
+        const newStatusValue = e.currentTarget.checked
+        changeTaskStatus(taskId,newStatusValue  ? TaskStatuses.Completed:TaskStatuses.New, todoId)
     },[changeTaskStatus,taskId,todoId])
 
     const onChangeInputValueWrapper = useCallback(function(valueNew: string) {
@@ -31,13 +30,13 @@ export const Tasks = React.memo(( {todoId,taskId,removeTask,changeTaskStatus,cha
 
     const removeTaskWrapper = useCallback(() => removeTask(taskId, todoId),[removeTask,taskId,todoId])
 
-    return <li  className={isDone ? 'is-done' : ''}>
+    return <li  className={status === TaskStatuses.Completed ? 'is-done' : ''}>
         <Checkbox
-            checked={isDone}
+            checked={status === TaskStatuses.Completed}
             color="primary"
             onChange={onChangeHandlerWrapper}
         />
-        <EditInput isDone={isDone} title={titleEditInput} onChange={onChangeInputValueWrapper}/>
+        <EditInput statuses={status} title={titleEditInput} onChange={onChangeInputValueWrapper}/>
         <IconButton
             onClick={removeTaskWrapper}
             size={'small'}

@@ -1,24 +1,35 @@
 import { v1 } from 'uuid';
 import {
-     addTodolistAC,
+    addTodolistAC,
     removeTodolistAC,
-    todolistChangeTitleAC, TodolistChangeTitleType,
+    todolistChangeTitleAC, TodolistChangeTitleType, TodoListDomainType,
     todoListReducer
 } from './todoList-reducer';
-import { TodoListType } from '../AppRudux';
 
 
 
 let todolistId1: string;
 let todolistId2: string;
-let startState: Array<TodoListType> = []
+let startState: Array<TodoListDomainType> = []
 
 beforeEach(() => {
     todolistId1: v1();
     todolistId2: v1();
     startState = [
-        {id: todolistId1, title: 'What to learn', filter: 'all'},
-        {id: todolistId2, title: 'What to buy', filter: 'all'}
+        {
+            id: todolistId1,
+            title: 'asa',
+            order:1,
+            addedDate: '121',
+            filter: 'all',
+        },
+        {
+            id: todolistId2,
+            title:'New Todo11111list',
+            order:1,
+            addedDate: '121',
+            filter: 'all',
+        }
     ]
 })
 
@@ -51,7 +62,7 @@ test('correct todolist should change its name', () => {
 
     const endState = todoListReducer(startState, todolistChangeTitleAC(action.title, action.id));
 
-    expect(endState[0].title).toBe('What to learn');
+    expect(endState[0].title).toBe('New Todo11111list');
     expect(endState[1].title).toBe(newTodolistTitle);
 });
 

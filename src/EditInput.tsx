@@ -1,17 +1,18 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { TextField } from '@material-ui/core';
+import { TaskStatuses } from './Api/TaskListApi';
 
 type EditInputType = {
     title: string
     onChange:(valueNEW:string) => void
-    isDone?:boolean
+    statuses?:TaskStatuses
 }
 export const EditInput = React.memo((props: EditInputType) => {
     console.log('edit-input')
     const [editMode, setEditMode] = useState(false)
     const [title, setTitle] = useState(props.title)
 
-    const spanStrikeout = props.isDone ? 'span-strikeout': ''
+    const spanStrikeout = props.statuses === TaskStatuses.Completed ? 'span-strikeout': ''
 
     const onEditSpan = () => {
         setEditMode(true)

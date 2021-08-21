@@ -8,33 +8,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './Store/Store';
 import { addTaskAC, changeStatusAC, changeTaskValueNewAC, removeTaskAC } from './State/task-reducer';
 import {
-    addTodolistAC,
+    addTodolistAC, FilterValuesType,
     removeTodolistAC,
-    todolistChangeTitleAC
+    todolistChangeTitleAC,
+    TodoListDomainType
 } from './State/todoList-reducer';
 import { changeTodoListFilterTypeAC } from '../src/State/todoList-reducer';
-import { CreateTodolist, GetTodolists, UpdateTodolistTitle } from './Stories/todoLists';
-import { GetTask } from './Stories/taskList';
+import { GetTask } from './Stories/taskList.';
+import { TaskStatuses, TaskType } from './Api/TaskListApi';
 
-export type FilterValuesType = 'all' | 'active' | 'completed';
 
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
+
 export type TodoTaskType = {
-    [key: string]: TaskType[]
-}
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
+    [key: string]: Array<TaskType>
 }
 
 const AppRedux = React.memo(function () {
     console.log('App-Redux')
-    const todolists = useSelector<AppRootStateType, TodoListType[]>(state => state.todolists)
+    const todolists = useSelector<AppRootStateType, TodoListDomainType[]>(state => state.todolists)
 
     const tasks = useSelector<AppRootStateType, TodoTaskType>(state => state.tasks)
 
@@ -51,8 +42,8 @@ const AppRedux = React.memo(function () {
         dispatch(action)
     }, [dispatch])
 
-    const changeStatus = useCallback(function (id: string, isDone: boolean, todoId: string) {
-        const action = changeStatusAC(id, isDone, todoId)
+    const changeStatus = useCallback(function (id: string, status: TaskStatuses, todoId: string) {
+        const action = changeStatusAC(id, status, todoId)
         dispatch(action)
     }, [dispatch])
 
@@ -82,7 +73,6 @@ const AppRedux = React.memo(function () {
         const action = todolistChangeTitleAC(title, id)
         dispatch(action)
     }, [dispatch])
-
 
     const todoListsWrapper = todolists.map(todo => {
         let allTaskForTodoList = tasks[todo.id]
