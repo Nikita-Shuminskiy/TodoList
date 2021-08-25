@@ -2,14 +2,15 @@ import React, { ChangeEvent, useState, KeyboardEvent, useCallback } from 'react'
 import { IconButton, TextField } from '@material-ui/core';
 import './App.css';
 import { AddBox } from '@material-ui/icons';
+import { TaskType } from './Api/TaskListApi';
 
 
 export type AddItemFormType = {
-    addItem: (title: string) => void
+    addItem: (title:string) => void
 }
 
 export const AddTodoListForm = React.memo(function({addItem}: AddItemFormType) {
-    console.log('AddTODO--FORMA')
+
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -17,7 +18,7 @@ export const AddTodoListForm = React.memo(function({addItem}: AddItemFormType) {
 
     const addTask = () => {
         if (title.trim() !== '') {
-            addItem(title.trim());
+            addItem(title);
             setTitle('');
         } else {
             setError(textError);

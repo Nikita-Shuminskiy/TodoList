@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { AddTodoListForm } from './AddTodoListForm';
 import { EditInput } from './EditInput';
 import { Button, IconButton } from '@material-ui/core';
@@ -6,8 +6,10 @@ import { Delete } from '@material-ui/icons';
 import { Tasks } from './Tasks';
 import { FilterValuesType } from './State/todoList-reducer';
 import { TaskStatuses, TaskType } from './Api/TaskListApi';
+import { fetchTasksThunk } from './State/task-reducer';
+import { useDispatch } from 'react-redux';
 
-type PropsType = {
+type PropsTodoType = {
     titleTodoList: string
     tasks: Array<TaskType>
     removeTask: (taskId: string, todoId: string) => void
@@ -21,8 +23,12 @@ type PropsType = {
     changeTitleTodoList: (newTitle: string, id: string) => void
 }
 
-export const Todolist = React.memo(function (props: PropsType) {
-    console.log('TodoList')
+export const Todolist = React.memo(function (props: PropsTodoType) {
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+       dispatch(fetchTasksThunk(props.idTodoList))
+    },[dispatch])
     const changeTitleValueNewWrapper = useCallback((newTitle: string) => {
         props.changeTitleTodoList(newTitle, props.idTodoList)
     }, [props.changeTitleTodoList, props.idTodoList])

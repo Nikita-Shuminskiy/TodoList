@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import './App.css';
 import { Todolist } from './Todolist';
 import { AddTodoListForm } from './AddTodoListForm';
@@ -6,15 +6,21 @@ import { AppBar, Typography, Button, Toolbar, Container, Grid, Paper } from '@ma
 import { MenuOpen } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './Store/Store';
-import { addTaskAC, changeStatusAC, changeTaskValueNewAC, removeTaskAC } from './State/task-reducer';
+import {
+    addTaskAC,
+    addTaskThunk,
+    changeStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    removeTaskThunk
+} from './State/task-reducer';
 import {
     addTodolistAC, FilterValuesType,
-    removeTodolistAC,
+    removeTodolistAC, setTodolistsAC, setTodoListsThunk,
     todolistChangeTitleAC,
     TodoListDomainType
 } from './State/todoList-reducer';
 import { changeTodoListFilterTypeAC } from '../src/State/todoList-reducer';
-import { GetTask } from './Stories/taskList.';
 import { TaskStatuses, TaskType } from './Api/TaskListApi';
 
 
@@ -24,21 +30,24 @@ export type TodoTaskType = {
 }
 
 const AppRedux = React.memo(function () {
-    console.log('App-Redux')
+
     const todolists = useSelector<AppRootStateType, TodoListDomainType[]>(state => state.todolists)
 
     const tasks = useSelector<AppRootStateType, TodoTaskType>(state => state.tasks)
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(setTodoListsThunk())
+    }, [])
 
     const removeTask = useCallback(function (id: string, todoId: string) {
-        const action = removeTaskAC(id, todoId)
+        const action = removeTaskThunk(id, todoId)
         dispatch(action)
     }, [dispatch])
 
     const addTask = useCallback(function (title: string, todoId: string) {
-        const action = addTaskAC(title, todoId)
+        const action = addTaskThunk(title, todoId)
         dispatch(action)
     }, [dispatch])
 
@@ -48,7 +57,7 @@ const AppRedux = React.memo(function () {
     }, [dispatch])
 
     const changeTaskValueNew = useCallback(function (id: string, valueNew: string, todoId: string) {
-        const action = changeTaskValueNewAC(id, valueNew, todoId)
+        const action = changeTaskTitleAC(id, valueNew, todoId)
         dispatch(action)
     }, [dispatch])
 
@@ -124,7 +133,6 @@ const AppRedux = React.memo(function () {
                     {todoListsWrapper}
                 </Grid>
             </Container>
-        <GetTask/>
 
         </div>
 

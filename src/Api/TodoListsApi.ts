@@ -4,7 +4,7 @@ const instance = axios.create({
     baseURL:'https://social-network.samuraijs.com/api/1.1/',
     withCredentials:true,
     headers: {
-        'API-KEY': '71501a34-a17e-4bd2-be97-8b7458efae32'
+        'API-KEY': '95317ac1-e6b7-416e-8234-94b99f351254'
     }
 })
 
@@ -28,7 +28,6 @@ type GeneralTodoListType<Data = {}> = {
 export const todoLists = {
     getTodolists() {
        return instance.get<Array<TodolistType>>('todo-lists')
-
     },
     delTodoLists(todoId:string) {
         return instance.delete<Array<GeneralTodoListType>>(`todo-lists/${todoId}`)

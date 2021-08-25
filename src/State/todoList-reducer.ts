@@ -1,48 +1,73 @@
 import { v1 } from 'uuid';
-import { TodolistType } from '../Api/TodoListsApi';
+import { todoLists, TodolistType } from '../Api/TodoListsApi';
+import { ActionType } from '../Store/Store';
+import { Dispatch } from 'redux';
 
-export type ActionType = RemoveTodoType | AddTodolistType | TodolistChangeTitleType | changeTodoListFilterType
-
-
-export type RemoveTodoType = { type: 'REMOVE-TODOLIST', id: string }
-
-export type AddTodolistType = { type: 'ADD-TODOLIST', title: string, todolistId: string }
-
-export type TodolistChangeTitleType = {
-    type: 'CHANGE-TODOLIST-TITLE'
-    title: string
-    id: string
-
-}
-export type changeTodoListFilterType = {
-    type: 'FILTER-TODOLIST'
-    todolistId: string
-    value: FilterValuesType
-}
-
-export const removeTodolistAC = (id: string): RemoveTodoType => {
-    return {type: 'REMOVE-TODOLIST', id}
-}
-
-export const addTodolistAC = (title: string): AddTodolistType => {
-    return {type: 'ADD-TODOLIST', title, todolistId: v1()}
-}
-
-export const todolistChangeTitleAC = (title: string, id: string): TodolistChangeTitleType => {
-    return {type: 'CHANGE-TODOLIST-TITLE', title, id}
-}
-export const changeTodoListFilterTypeAC = (todolistId: string, value: FilterValuesType): changeTodoListFilterType => {
-    return {type: 'FILTER-TODOLIST',todolistId,value }
-}
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
-let initialState:Array<TodoListDomainType> = []
+
+export const removeTodolistAC = (id: string) => ({type: 'REMOVE-TODOLIST', id} as const)
+
+export const addTodolistAC = (title: string) => ({type: 'ADD-TODOLIST', title, todolistId: v1()} as const)
+
+export const todolistChangeTitleAC = (title: string, id: string) => ({
+    type: 'CHANGE-TODOLIST-TITLE',
+    title,
+    id
+} as const)
+
+export const changeTodoListFilterTypeAC = (todolistId: string, value: FilterValuesType) => ({
+    type: 'FILTER-TODOLIST',
+    todolistId,
+    value
+} as const)
+
+export const setTodolistsAC = (todolists: Array<TodolistType>) => (  { type: 'SET-TODOLISTS', todolists} as const)
+
+
+
+
+export const setTodoListsThunk = () => {
+    return (dispatch: Dispatch) => {
+        todoLists.getTodolists()
+            .then((response) => {
+                dispatch(setTodolistsAC(response.data))
+            })
+    }
+}
+
+/*export const addTodoListThunk = (title: string) => {
+    return (dispatch: AppDispatchType) => {
+        todoLists.createTodoLists(title)
+            .then(response => {
+                dispatch(addTodolistAC(response.data))
+            })
+    }
+}
+export const deleteTodoListThunk = (todoId: string) => {
+    return (dispatch: AppDispatchType) => {
+        todoLists.delTodoLists(todoId)
+            .then(response => {
+                dispatch(addTodolistAC(response.data))
+            })
+    }
+}
+export const updateTodoListTitleThunk = (todoId:string,title:string) => {
+        return (dispatch: AppDispatchType) => {
+            todoLists.updTodoLists(todoId,title)
+                .then(response => {
+                    dispatch(addTodolistAC(response.data))
+                })
+        }
+    }*/
+
+
+let initialState: Array<TodoListDomainType> = []
 
 export type TodoListDomainType = TodolistType & {
     filter: FilterValuesType
 }
-
 
 export const todoListReducer = (state = initialState, action: ActionType): Array<TodoListDomainType> => {
     const stateCopy = [...state]
@@ -54,7 +79,7 @@ export const todoListReducer = (state = initialState, action: ActionType): Array
             const todoList: TodoListDomainType = {
                 id: action.todolistId,
                 title: action.title,
-                order:1,
+                order: 1,
                 addedDate: '121',
                 filter: 'all',
             }
@@ -76,7 +101,9 @@ export const todoListReducer = (state = initialState, action: ActionType): Array
             }
             return [...state]*/
         }
-
+        case 'SET-TODOLISTS': {
+            return action.todolists.map((t) => ( {...t, filter:'all'} ) )
+        }
         default:
             return state
     }

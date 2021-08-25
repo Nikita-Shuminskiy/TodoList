@@ -1,4 +1,4 @@
-import { addTaskAC, changeStatusAC, changeTaskValueNewAC, removeTaskAC, taskReducer } from './task-reducer';
+import { addTaskAC, changeStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer } from './task-reducer';
 import { removeTodolistAC } from './todoList-reducer';
 import { TodoTaskType } from '../AppRudux';
 import { TaskPriorities, TaskStatuses } from '../Api/TaskListApi';
@@ -190,7 +190,7 @@ test('status of specified task should be changed', () => {
 });
 test('changing the title for TodoListTask', () => {
 
-    const action = changeTaskValueNewAC('1', 'REACT-JS-CSS', 'todolistId1');
+    const action = changeTaskTitleAC('1', 'REACT-JS-CSS', 'todolistId1');
 
     const endState = taskReducer(startState, action)
 

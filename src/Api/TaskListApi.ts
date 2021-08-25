@@ -3,12 +3,11 @@ import axios from 'axios';
 
 export type TitlePropertiesType = {
     title: string
-    description: string
-    completed: boolean
-    status: string
-    priority: string
     startDate: string
+    priority: TaskPriorities
+    description: string
     deadline: string
+    status: TaskStatuses
 }
 
 
@@ -32,16 +31,16 @@ export type TaskType = {
     completed: boolean
     status: TaskStatuses
     priority: TaskPriorities
-    startDate: number
-    deadline: number
+    startDate: string
+    deadline: string
     id: string
     todoListId: string
     order: number
     addedDate: number
 }
-type GetTaskType = {
+type GetTaskType<T = []> = {
+    items: T
     error: string
-    items: Array<TaskType>
     totalCount: number
 }
 type GeneralTaskType<Item = {}> = {
@@ -51,7 +50,11 @@ type GeneralTaskType<Item = {}> = {
     fieldsErrors: Array<string>
     messages: Array<string>
     resultCode: number
-
+}
+type addTaskType<T = {}> = {
+    data: { item:T }
+    resultCode:number
+    message: string
 }
 const instance = axios.create({
     baseURL:'https://social-network.samuraijs.com/api/1.1/',
@@ -61,17 +64,17 @@ const instance = axios.create({
     }
 })
 export const taskApi = {
-    getTask(todolistId:string) {
-       return instance.get<Array<GetTaskType>>(`todo-lists/${todolistId}/tasks`)
+    getTasks(todolistId:string) {
+       return instance.get<GetTaskType<Array<TaskType>>>(`todo-lists/${todolistId}/tasks`)
     },
-    createTask(todolistId:string, title:string) {
-        return instance.post<Array<GeneralTaskType<TaskType>>>(`todo-lists/${todolistId}/tasks`, {title})
+    createTask( title:string,todolistId:string) {
+        return instance.post<addTaskType<TaskType>>(`todo-lists/${todolistId}/tasks`, {title})
     },
-    updTitleTask(todolistId:string, taskId:string, properties:TitlePropertiesType) {
+    updTitleTask(taskId:string,properties:TitlePropertiesType, todolistId:string) {
         return instance.put<Array<GeneralTaskType<TaskType>>>(`todo-lists/${todolistId}/tasks/${taskId}`, {properties})
     },
-    deleteTask(todolistId:string, taskId:string) {
-        return instance.delete<Array<GeneralTaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    deleteTask(id: string, todoId: string) {
+        return instance.delete<Array<GeneralTaskType>>(`todo-lists/${todoId}/tasks/${id}`)
     },
 
 }
