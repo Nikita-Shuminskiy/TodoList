@@ -8,8 +8,8 @@ import {
 import {
     addTodolistAC,
     changeTodoListFilterTypeAC,
-    removeTodolistAC, setTodolistsAC,
-    todolistChangeTitleAC,
+    daleteTodolistAC, setTodolistsAC,
+    updateTodoListTitleAC,
     todoListReducer
 } from '../State/todoList-reducer';
 import thunk from 'redux-thunk';
@@ -20,9 +20,9 @@ import thunk from 'redux-thunk';
 
 
 export type ActionType =
-    | ReturnType<typeof removeTodolistAC>
+    | ReturnType<typeof daleteTodolistAC>
     | ReturnType<typeof addTodolistAC>
-    | ReturnType<typeof todolistChangeTitleAC>
+    | ReturnType<typeof updateTodoListTitleAC>
     | ReturnType<typeof changeTodoListFilterTypeAC>
     | ReturnType<typeof setTodolistsAC>
     | ReturnType<typeof removeTaskAC>

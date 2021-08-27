@@ -12,17 +12,16 @@ import {
     changeStatusAC,
     changeTaskTitleAC,
     removeTaskAC,
-    removeTaskThunk
+    removeTaskThunk, updateTaskStatusTC, updateTaskTitleTC
 } from './State/task-reducer';
 import {
-    addTodolistAC, FilterValuesType,
-    removeTodolistAC, setTodolistsAC, setTodoListsThunk,
-    todolistChangeTitleAC,
-    TodoListDomainType
+    addTodolistAC, addTodoListThunk, FilterValuesType,
+    daleteTodolistAC, setTodolistsAC, setTodoListsThunk,
+    updateTodoListTitleAC,
+    TodoListDomainType, deleteTodoListThunk, updateTodoListTitleThunk
 } from './State/todoList-reducer';
 import { changeTodoListFilterTypeAC } from '../src/State/todoList-reducer';
 import { TaskStatuses, TaskType } from './Api/TaskListApi';
-
 
 
 export type TodoTaskType = {
@@ -39,7 +38,7 @@ const AppRedux = React.memo(function () {
 
     useEffect(() => {
         dispatch(setTodoListsThunk())
-    }, [])
+    }, [dispatch])
 
     const removeTask = useCallback(function (id: string, todoId: string) {
         const action = removeTaskThunk(id, todoId)
@@ -52,12 +51,12 @@ const AppRedux = React.memo(function () {
     }, [dispatch])
 
     const changeStatus = useCallback(function (id: string, status: TaskStatuses, todoId: string) {
-        const action = changeStatusAC(id, status, todoId)
+        const action = updateTaskStatusTC(id, status, todoId)
         dispatch(action)
     }, [dispatch])
 
     const changeTaskValueNew = useCallback(function (id: string, valueNew: string, todoId: string) {
-        const action = changeTaskTitleAC(id, valueNew, todoId)
+        const action = updateTaskTitleTC(id, valueNew, todoId)
         dispatch(action)
     }, [dispatch])
 
@@ -68,18 +67,17 @@ const AppRedux = React.memo(function () {
 
 /////////////////////////////////
     const delTodolist = useCallback(function (id: string) {
-        const action = removeTodolistAC(id)
+        const action = deleteTodoListThunk(id)
         dispatch(action)
-
     }, [dispatch])
 
     const addTodoList = useCallback(function (title: string) {
-        const action = addTodolistAC(title)
+        const action = addTodoListThunk(title)
         dispatch(action)
     }, [dispatch])
 
     const changeTitleTodoList = useCallback(function (title: string, id: string) {
-        const action = todolistChangeTitleAC(title, id)
+        const action = updateTodoListTitleThunk(title, id)
         dispatch(action)
     }, [dispatch])
 

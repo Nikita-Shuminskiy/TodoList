@@ -27,11 +27,11 @@ export const Todolist = React.memo(function (props: PropsTodoType) {
 
     const dispatch = useDispatch()
     useEffect(() => {
-       dispatch(fetchTasksThunk(props.idTodoList))
-    },[dispatch])
+        dispatch(fetchTasksThunk(props.idTodoList))
+    }, [dispatch, props.idTodoList])
     const changeTitleValueNewWrapper = useCallback((newTitle: string) => {
         props.changeTitleTodoList(newTitle, props.idTodoList)
-    }, [props.changeTitleTodoList, props.idTodoList])
+    }, [])
 
     const onAllClickHandlerWrapper = useCallback(() => props.changeFilterTasks(props.idTodoList, 'all'), [props.changeFilterTasks, props.idTodoList])
 
@@ -46,7 +46,6 @@ export const Todolist = React.memo(function (props: PropsTodoType) {
     const deleteTodoListWrapper = useCallback(() => {
         props.delTodolist(props.idTodoList)
     }, [props.delTodolist, props.idTodoList])
-
 
 
     let tasksForTodolist = props.tasks
@@ -68,14 +67,14 @@ export const Todolist = React.memo(function (props: PropsTodoType) {
         <ul style={{listStyle: 'none'}}>
             {
                 tasksForTodolist.map(t => {
-                  return <div key={t.id}>
-                    <Tasks removeTask={props.removeTask} todoId={props.idTodoList}
-                           changeTaskStatus={props.changeTaskStatus}
-                           changeTaskValueNew={props.changeTaskValueNew}
-                           titleEditInput={t.title}
-                            taskId={t.id}
-                            status={t.status}/>
-                  </div>
+                    return <div key={t.id}>
+                        <Tasks removeTask={props.removeTask} todoId={props.idTodoList}
+                               changeTaskStatus={props.changeTaskStatus}
+                               changeTaskValueNew={props.changeTaskValueNew}
+                               titleEditInput={t.title}
+                               taskId={t.id}
+                               status={t.status}/>
+                    </div>
                 })
             }
         </ul>

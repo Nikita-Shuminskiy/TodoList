@@ -1,5 +1,5 @@
 import { addTaskAC, changeStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer } from './task-reducer';
-import { removeTodolistAC } from './todoList-reducer';
+import { daleteTodolistAC } from './todoList-reducer';
 import { TodoTaskType } from '../AppRudux';
 import { TaskPriorities, TaskStatuses } from '../Api/TaskListApi';
 import { v1 } from 'uuid';
@@ -201,7 +201,7 @@ test('changing the title for TodoListTask', () => {
 });
 test('property with todolistId should be deleted', () => {
 
-    const action = removeTodolistAC('todolistId2');
+    const action = daleteTodolistAC('todolistId2');
 
     const endState = taskReducer(startState, action)
 

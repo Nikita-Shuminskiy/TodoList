@@ -1,8 +1,8 @@
 import { v1 } from 'uuid';
 import {
     addTodolistAC,
-    removeTodolistAC,
-    todolistChangeTitleAC, TodolistChangeTitleType, TodoListDomainType,
+    daleteTodolistAC,
+    updateTodoListTitleAC, TodolistChangeTitleType, TodoListDomainType,
     todoListReducer
 } from './todoList-reducer';
 
@@ -35,7 +35,7 @@ beforeEach(() => {
 
 test('correct todolist should be removed', () => {
 
-    const endState = todoListReducer(startState, removeTodolistAC(todolistId1))
+    const endState = todoListReducer(startState, daleteTodolistAC(todolistId1))
 
     expect(endState.length).toBe(1);
     expect(endState[0].id).toBe(todolistId2);
@@ -60,7 +60,7 @@ test('correct todolist should change its name', () => {
         id: todolistId2,
     };
 
-    const endState = todoListReducer(startState, todolistChangeTitleAC(action.title, action.id));
+    const endState = todoListReducer(startState, updateTodoListTitleAC(action.title, action.id));
 
     expect(endState[0].title).toBe('New Todo11111list');
     expect(endState[1].title).toBe(newTodolistTitle);
