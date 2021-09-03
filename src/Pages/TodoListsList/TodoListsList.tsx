@@ -76,11 +76,11 @@ export const TodoListsList: React.FC<TodoListsListType> = (props) => {
         <Grid container style={{padding: '20px, 0'}}>
             <AddTodoListForm addItem={addTodoList}/>
         </Grid>
+        <Grid container spacing={3}>
             {
                 todolists.map(todo => {
                     let allTaskForTodoList = tasks[todo.id]
                     return (
-                        <Grid container spacing={5}>
                             <Grid item key={todo.id}>
                                 <Paper style={{padding: '20px'}} elevation={5}>
                                     <Todolist
@@ -98,9 +98,9 @@ export const TodoListsList: React.FC<TodoListsListType> = (props) => {
                                     />
                                 </Paper>
                             </Grid>
-                        </Grid>
                     )
                 })}
+        </Grid>
     </>
 };
 
