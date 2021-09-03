@@ -5,9 +5,10 @@ import { Button, IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import { Tasks } from '../Tasks/Tasks';
 import { FilterValuesType } from '../../State/todoList-reducer';
-import { TaskStatuses, TaskType } from '../../Api/TaskListApi';
 import { fetchTasksThunk } from '../../State/task-reducer';
 import { useDispatch } from 'react-redux';
+import { RequestStatusType } from '../../State/App-reducer';
+import { TaskStatuses, TaskType } from '../../Api/TodoListsApi';
 
 type PropsTodoType = {
     titleTodoList: string
@@ -21,6 +22,7 @@ type PropsTodoType = {
     idTodoList: string
     delTodolist: (id: string) => void
     changeTitleTodoList: (newTitle: string, id: string) => void
+    entityStatus: RequestStatusType
 }
 
 export const Todolist = React.memo(function (props: PropsTodoType) {
@@ -58,12 +60,12 @@ export const Todolist = React.memo(function (props: PropsTodoType) {
 
     return <div>
         <h3>
-            <IconButton onClick={deleteTodoListWrapper}>
+            <IconButton disabled={props.entityStatus === 'loading'} onClick={deleteTodoListWrapper}>
                 <Delete/>
             </IconButton>
             <EditSpan title={props.titleTodoList} onChange={changeTitleValueNewWrapper}/>
         </h3>
-        <AddTodoListForm addItem={addTaskWrapper}/>
+        <AddTodoListForm entityStatus={props.entityStatus} addItem={addTaskWrapper}/>
         <ul style={{listStyle: 'none'}}>
             {
                 tasksForTodolist.map(t => {

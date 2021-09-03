@@ -2,7 +2,7 @@ import React, { ChangeEvent, useCallback } from 'react';
 import { Checkbox, IconButton } from '@material-ui/core';
 import { EditSpan } from '../../Components/EditSpan/EditSpan';
 import { Delete } from '@material-ui/icons';
-import { TaskStatuses } from '../../Api/TaskListApi';
+import { TaskStatuses } from '../../Api/TodoListsApi';
 
 
 export type TasksComponentType = {

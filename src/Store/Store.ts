@@ -1,18 +1,16 @@
 import { applyMiddleware, combineReducers, createStore, Dispatch } from 'redux';
-import {
-    addTaskAC,
-    changeStatusAC,
-    changeTaskTitleAC, removeTaskAC, setTasksAC,
-    taskReducer
-} from '../State/task-reducer';
+import { addTaskAC, removeTaskAC, setTasksAC, taskReducer, updateTaskAC } from '../State/task-reducer';
 import {
     addTodolistAC,
+    changeTodolistEntityStatus,
     changeTodoListFilterAC,
-    daleteTodolistAC, setTodolistsAC,
-    updateTodoListTitleAC,
-    todoListReducer
+    daleteTodolistAC,
+    setTodolistsAC,
+    todoListReducer,
+    updateTodoListTitleAC
 } from '../State/todoList-reducer';
 import thunk from 'redux-thunk';
+import { appReducer, setAppError, setAppStatus } from '../State/App-reducer';
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -27,13 +25,16 @@ export type ActionType =
     | ReturnType<typeof setTodolistsAC>
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTaskAC>
-    | ReturnType<typeof changeStatusAC>
-    | ReturnType<typeof changeTaskTitleAC>
     | ReturnType<typeof setTasksAC>
+    | ReturnType<typeof setAppStatus>
+    | ReturnType<typeof setAppError>
+    | ReturnType<typeof changeTodolistEntityStatus>
+    | ReturnType<typeof updateTaskAC>
 
 const rootReducer = combineReducers({
     tasks: taskReducer,
-    todolists: todoListReducer
+    todolists: todoListReducer,
+    app: appReducer
 })
 // непосредственно создаём store
 export const store = createStore(rootReducer, applyMiddleware(thunk));

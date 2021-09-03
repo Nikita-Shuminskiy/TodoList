@@ -3,17 +3,19 @@ import { Grid, Paper } from '@material-ui/core';
 import { Todolist } from '../TodoList/Todolist';
 import {
     addTodoListThunk,
-    changeTodoListFilterAC, deleteTodoListThunk,
+    changeTodoListFilterAC,
+    deleteTodoListThunk,
     FilterValuesType,
     setTodoListsThunk,
-    TodoListDomainType, updateTodoListTitleThunk
+    TodoListDomainType,
+    updateTodoListTitleThunk
 } from '../../State/todoList-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../Store/Store';
-import { addTaskThunk, removeTaskThunk, updateTaskStatusTC, updateTaskTitleTC } from '../../State/task-reducer';
-import { TaskStatuses } from '../../Api/TaskListApi';
+import { addTaskThunk, removeTaskThunk, updateTaskTC } from '../../State/task-reducer';
 import { TodoTaskType } from '../../App/App';
 import { AddTodoListForm } from '../../Components/AddItemForm/AddTodoListForm';
+import { TaskStatuses } from '../../Api/TodoListsApi';
 
 
 type TodoListsListType = {}
@@ -41,12 +43,12 @@ export const TodoListsList: React.FC<TodoListsListType> = (props) => {
     }, [dispatch])
 
     const changeStatus = useCallback(function (id: string, status: TaskStatuses, todoId: string) {
-        const action = updateTaskStatusTC(id, status, todoId)
+        const action = updateTaskTC(id, {status}, todoId)
         dispatch(action)
     }, [dispatch])
 
     const changeTaskValueNew = useCallback(function (id: string, valueNew: string, todoId: string) {
-        const action = updateTaskTitleTC(id, valueNew, todoId)
+        const action = updateTaskTC(id, {title:valueNew}, todoId)
         dispatch(action)
     }, [dispatch])
 
@@ -84,6 +86,7 @@ export const TodoListsList: React.FC<TodoListsListType> = (props) => {
                             <Grid item key={todo.id}>
                                 <Paper style={{padding: '20px'}} elevation={5}>
                                     <Todolist
+                                        entityStatus={todo.entityStatus}
                                         changeTitleTodoList={changeTitleTodoList}
                                         changeTaskValueNew={changeTaskValueNew}
                                         delTodolist={delTodolist}

@@ -2,13 +2,15 @@ import React, { ChangeEvent, useState, KeyboardEvent, useCallback } from 'react'
 import { IconButton, TextField } from '@material-ui/core';
 import '../../App/App.css';
 import { AddBox } from '@material-ui/icons';
+import { RequestStatusType } from '../../State/App-reducer';
 
 
 export type AddItemFormType = {
     addItem: (title:string) => void
+    entityStatus?:RequestStatusType
 }
 
-export const AddTodoListForm = React.memo(function({addItem}: AddItemFormType) {
+export const AddTodoListForm = React.memo(function({addItem,entityStatus}: AddItemFormType) {
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -46,8 +48,10 @@ export const AddTodoListForm = React.memo(function({addItem}: AddItemFormType) {
                 label={'Title'}
                 size={'small'}
                 error={!!error}
+                disabled={entityStatus === 'loading'}
             />
             <IconButton
+                disabled={entityStatus === 'loading'}
                 onClick={addTask}
                 color={'primary'}
                 size={'small'}>
