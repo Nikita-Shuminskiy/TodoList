@@ -1,6 +1,6 @@
 import { todoListReducer, addTodolistAC, TodoListDomainType } from './todoList-reducer';
 import { taskReducer } from "./task-reducer";
-import { TodoTaskType } from '../AppRudux';
+import { TodoTaskType } from '../App/App';
 
 
 test('ids should be equals', () => {

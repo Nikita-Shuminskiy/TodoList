@@ -1,6 +1,6 @@
 import { addTaskAC, changeStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer } from './task-reducer';
 import { daleteTodolistAC } from './todoList-reducer';
-import { TodoTaskType } from '../AppRudux';
+import { TodoTaskType } from '../App/App';
 import { TaskPriorities, TaskStatuses } from '../Api/TaskListApi';
 import { v1 } from 'uuid';
 

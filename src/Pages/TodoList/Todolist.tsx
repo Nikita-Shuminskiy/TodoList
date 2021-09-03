@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
-import { AddTodoListForm } from './AddTodoListForm';
-import { EditInput } from './EditInput';
+import { AddTodoListForm } from '../../Components/AddItemForm/AddTodoListForm';
+import { EditSpan } from '../../Components/EditSpan/EditSpan';
 import { Button, IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import { Tasks } from './Tasks';
-import { FilterValuesType } from './State/todoList-reducer';
-import { TaskStatuses, TaskType } from './Api/TaskListApi';
-import { fetchTasksThunk } from './State/task-reducer';
+import { Tasks } from '../Tasks/Tasks';
+import { FilterValuesType } from '../../State/todoList-reducer';
+import { TaskStatuses, TaskType } from '../../Api/TaskListApi';
+import { fetchTasksThunk } from '../../State/task-reducer';
 import { useDispatch } from 'react-redux';
 
 type PropsTodoType = {
@@ -61,7 +61,7 @@ export const Todolist = React.memo(function (props: PropsTodoType) {
             <IconButton onClick={deleteTodoListWrapper}>
                 <Delete/>
             </IconButton>
-            <EditInput title={props.titleTodoList} onChange={changeTitleValueNewWrapper}/>
+            <EditSpan title={props.titleTodoList} onChange={changeTitleValueNewWrapper}/>
         </h3>
         <AddTodoListForm addItem={addTaskWrapper}/>
         <ul style={{listStyle: 'none'}}>

@@ -1,8 +1,7 @@
 import React, { ChangeEvent, useState, KeyboardEvent, useCallback } from 'react';
 import { IconButton, TextField } from '@material-ui/core';
-import './App.css';
+import '../../App/App.css';
 import { AddBox } from '@material-ui/icons';
-import { TaskType } from './Api/TaskListApi';
 
 
 export type AddItemFormType = {

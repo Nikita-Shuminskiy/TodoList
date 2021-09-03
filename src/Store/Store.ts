@@ -7,7 +7,7 @@ import {
 } from '../State/task-reducer';
 import {
     addTodolistAC,
-    changeTodoListFilterTypeAC,
+    changeTodoListFilterAC,
     daleteTodolistAC, setTodolistsAC,
     updateTodoListTitleAC,
     todoListReducer
@@ -23,7 +23,7 @@ export type ActionType =
     | ReturnType<typeof daleteTodolistAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof updateTodoListTitleAC>
-    | ReturnType<typeof changeTodoListFilterTypeAC>
+    | ReturnType<typeof changeTodoListFilterAC>
     | ReturnType<typeof setTodolistsAC>
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTaskAC>
