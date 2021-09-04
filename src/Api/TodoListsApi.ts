@@ -30,7 +30,7 @@ export const todoListsApi = {
         return instance.post<ResponseType<{item: TaskType}>>(`todo-lists/${todolistId}/tasks`, {title:title})
     },
     updateTask(taskId:string, properties:UpdateTaskModelType, todolistId:string) {
-        return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, {properties})
+        return instance.put<ResponseType<{item: TaskType}>>(`todo-lists/${todolistId}/tasks/${taskId}`, properties) // {properties} не ставить на обновление!!
     },
     deleteTask(id: string, todoId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todoId}/tasks/${id}`)
@@ -84,8 +84,8 @@ export type UpdateTaskModelType = {
     startDate: string
     deadline: string
 }
-type GetTasksResponse = {
-    error: string | null
+export type GetTasksResponse = {
+    error: string
     totalCount: number
     items: TaskType[]
 }

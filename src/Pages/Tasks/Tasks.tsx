@@ -25,8 +25,6 @@ export const Tasks = React.memo(({
                                      status
                                  }: TasksComponentType) => {
 
-    console.log('Task-Component')
-
     const onChangeHandlerWrapper = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked
         changeTaskStatus(taskId, newStatusValue ? TaskStatuses.Completed : TaskStatuses.New, todoId)
@@ -38,15 +36,19 @@ export const Tasks = React.memo(({
 
     const removeTaskWrapper = useCallback(() => removeTask(taskId, todoId), [removeTask, taskId, todoId])
 
-    return <li className={status === TaskStatuses.Completed ? 'is-done' : ''}>
-        <Checkbox
-            checked={status === TaskStatuses.Completed}
-            color="primary"
-            onChange={onChangeHandlerWrapper}
-        />
-        <EditSpan statuses={status} title={titleEditInput} onChange={onChangeInputValueWrapper}/>
-        <IconButton onClick={removeTaskWrapper} size={'small'}>
-            <Delete fontSize={'medium'}/>
-        </IconButton>
-    </li>
+    return <>
+        <li >
+            <Checkbox
+                className={status === TaskStatuses.Completed ? 'is-done' : ''}
+                checked={status === TaskStatuses.Completed}
+                color="primary"
+                onChange={onChangeHandlerWrapper}
+            />
+            <EditSpan  statuses={status} title={titleEditInput} onChange={onChangeInputValueWrapper}/>
+            <IconButton onClick={removeTaskWrapper} size={'small'}>
+                <Delete fontSize={'medium'}/>
+            </IconButton>
+        </li>
+    </>
+
 })

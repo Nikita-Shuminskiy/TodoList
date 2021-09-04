@@ -12,8 +12,7 @@ import {
 } from '../../State/todoList-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../Store/Store';
-import { addTaskThunk, removeTaskThunk, updateTaskTC } from '../../State/task-reducer';
-import { TodoTaskType } from '../../App/App';
+import { addTaskThunk, removeTaskThunk, TodoTaskType, updateTaskTC } from '../../State/task-reducer';
 import { AddTodoListForm } from '../../Components/AddItemForm/AddTodoListForm';
 import { TaskStatuses } from '../../Api/TodoListsApi';
 
@@ -43,7 +42,7 @@ export const TodoListsList: React.FC<TodoListsListType> = (props) => {
     }, [dispatch])
 
     const changeStatus = useCallback(function (id: string, status: TaskStatuses, todoId: string) {
-        const action = updateTaskTC(id, {status}, todoId)
+        const action = updateTaskTC(id, {status:status}, todoId)
         dispatch(action)
     }, [dispatch])
 
