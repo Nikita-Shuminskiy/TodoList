@@ -15,9 +15,12 @@ import { AppRootStateType } from '../../Store/Store';
 import { addTaskThunk, removeTaskThunk, TodoTaskType, updateTaskTC } from '../../State/task-reducer';
 import { AddTodoListForm } from '../../Components/AddItemForm/AddTodoListForm';
 import { TaskStatuses } from '../../Api/TodoListsApi';
+import { Redirect } from 'react-router-dom';
 
 
-type TodoListsListType = {}
+type TodoListsListType = {
+
+}
 
 
 export const TodoListsList: React.FC<TodoListsListType> = (props) => {
@@ -25,9 +28,14 @@ export const TodoListsList: React.FC<TodoListsListType> = (props) => {
 
     const tasks = useSelector<AppRootStateType, TodoTaskType>(state => state.tasks)
 
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.authReducer.isLoggedIn)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
+        if (!isLoggedIn){
+            return
+        }
         dispatch(setTodoListsThunk())
     }, [dispatch])
 
@@ -72,6 +80,9 @@ export const TodoListsList: React.FC<TodoListsListType> = (props) => {
         dispatch(action)
     }, [dispatch])
 
+    if (!isLoggedIn){
+        return <Redirect to={'/login'} />
+    }
 
     return <>
         <Grid container style={{padding: '20px, 0'}}>

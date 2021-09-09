@@ -61,7 +61,8 @@ export const setTodoListsThunk = () =>
                     dispatch(setAppStatus('failed'))
                 }
             }).catch(err => {
-            handleServerNetworkError(err.messages, dispatch)
+            /*handleServerNetworkError(err.messages, dispatch)*/
+            alert('error set todoLists')
         })
     }
 export const addTodoListThunk = (title: string) =>

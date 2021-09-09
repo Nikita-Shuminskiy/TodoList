@@ -10,7 +10,8 @@ import {
     updateTodoListTitleAC
 } from '../State/todoList-reducer';
 import thunk from 'redux-thunk';
-import { appReducer, setAppError, setAppStatus } from '../State/App-reducer';
+import { appReducer, setAppError, setAppStatus, setIsInitializedAC } from '../State/App-reducer';
+import { authReducer, setIsLoggedInAC } from '../State/authReducer';
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -18,6 +19,7 @@ import { appReducer, setAppError, setAppStatus } from '../State/App-reducer';
 
 
 export type ActionType =
+    | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof daleteTodolistAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof updateTodoListTitleAC>
@@ -30,11 +32,13 @@ export type ActionType =
     | ReturnType<typeof setAppError>
     | ReturnType<typeof changeTodolistEntityStatus>
     | ReturnType<typeof updateTaskAC>
+    | ReturnType<typeof setIsInitializedAC>
 
 const rootReducer = combineReducers({
     tasks: taskReducer,
     todolists: todoListReducer,
-    app: appReducer
+    app: appReducer,
+    authReducer: authReducer
 })
 // непосредственно создаём store
 export const store = createStore(rootReducer, applyMiddleware(thunk));
