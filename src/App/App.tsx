@@ -17,7 +17,7 @@ import { initializeAppTC, RequestStatusType } from '../State/App-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { ErrorSnackbar } from '../Components/ErrorSnackBar/ErrorSnackBar';
 import { Login } from '../Pages/Login/Login';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch,useHistory  } from 'react-router-dom';
 import { logoutTC } from '../State/authReducer';
 
 
@@ -29,7 +29,7 @@ const App = React.memo(function () {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.authReducer.isLoggedIn)
 
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-
+    const history = useHistory()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -40,6 +40,9 @@ const App = React.memo(function () {
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
+    }
+    const loginHandler = () => {
+        history.push('/login')
     }
 
 const logOutHandler = () =>{
@@ -55,7 +58,7 @@ const logOutHandler = () =>{
                     <Typography variant="h6">
                         MY TODOLIST :)
                     </Typography>
-                    <Button  variant={'outlined'} color="inherit">Login</Button>
+                    <Button onClick={loginHandler}  variant={'outlined'} color="inherit">Login</Button>
                     {isLoggedIn  &&   <Button onClick={logOutHandler} variant={'outlined'} color="inherit">Log-Out</Button> }
                 </Toolbar>
                 {status === 'loading' && <LinearProgress color="secondary"/>}
