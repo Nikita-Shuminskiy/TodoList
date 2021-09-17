@@ -30,14 +30,14 @@
     "typescript": "~3.7.2",
     "uuid": "^8.0.0"
   },
-  "homepage": "https://nick-gansta.github.io/TodoList/",
+  "homepage": "https://nick-gansta.github.io/TodoList",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages id build"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
