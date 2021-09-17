@@ -30,7 +30,7 @@
     "typescript": "~3.7.2",
     "uuid": "^8.0.0"
   },
-  "homepage": "https://nick-gansta.github.io/TodoList",
+  "homepage": "https://nick-gansta.github.io/TodoList/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
