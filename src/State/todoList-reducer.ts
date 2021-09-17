@@ -63,7 +63,10 @@ export const setTodoListsThunk = () =>
             }).catch(err => {
             /*handleServerNetworkError(err.messages, dispatch)*/
             alert('error set todoLists')
+                     dispatch(setAppError('TodoList is not found'))
+                    dispatch(setAppStatus('failed'))
         })
+        
     }
 export const addTodoListThunk = (title: string) =>
     (dispatch: AppDispatchType) => {
@@ -77,7 +80,9 @@ export const addTodoListThunk = (title: string) =>
                     handleServerAppError(res.data, dispatch)
                 }
             }).catch(err => {
-            handleServerNetworkError(err.messages, dispatch)
+                alert('fail reqest')
+                dispatch(setAppStatus('idle'))
+           // handleServerNetworkError(err.messages, dispatch)
         })
     }
 export const deleteTodoListThunk = (todoId: string) =>
