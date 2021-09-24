@@ -1,14 +1,28 @@
-import { ActionType, AppDispatchType, AppRootStateType } from '../Store/Store';
+import { AppDispatchType } from '../Store/Store';
 import { setAppStatus } from './App-reducer';
 import { authMeApi, LoginParamsType } from '../Api/TodoListsApi';
 import { handleServerAppError, handleServerNetworkError } from '../Utils/Error-utils';
+import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit/dist/createAction';
 
 const initialState = {
     isLoggedIn: false
 }
 type InitialStateType = typeof initialState
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+const slice = createSlice({
+    name: 'auth',
+    initialState: initialState,
+    reducers: {
+        setIsLoggedIn(state:InitialStateType, action:PayloadAction<{ value: boolean }>) {
+            state.isLoggedIn = action.payload.value
+        }
+
+    }
+})
+
+export const authReducer = slice.reducer
+/*(state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case 'login/SET-IS-LOGGED-IN':
             return {...state, isLoggedIn: action.value}
@@ -16,10 +30,9 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
             return state
 
     }
-}
-
+}*/
+export const { setIsLoggedIn } = slice.actions
 // actions
-export const setIsLoggedInAC = (value: boolean) => ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
 // thunks
 export const loginTC = (data: LoginParamsType) =>
@@ -28,7 +41,7 @@ export const loginTC = (data: LoginParamsType) =>
         authMeApi.login(data)
             .then((res) => {
                 if (res.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC(true))
+                    dispatch(setIsLoggedIn({value:true}))
                     dispatch(setAppStatus('idle'))
                 } else {
                     handleServerAppError(res.data, dispatch)
@@ -40,7 +53,7 @@ export const loginTC = (data: LoginParamsType) =>
 export const initializeAppTC = () => (dispatch: AppDispatchType) => {
     authMeApi.me().then(res => {
         if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC(true));
+            dispatch(setIsLoggedIn({value:true}));
         } else {
         }
     })
@@ -50,7 +63,7 @@ export const logoutTC = () => (dispatch: AppDispatchType) => {
     authMeApi.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(false))
+                dispatch(setIsLoggedIn({value:false}))
                 dispatch(setAppStatus('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch)

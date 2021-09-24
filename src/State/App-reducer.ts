@@ -1,5 +1,5 @@
 import { ActionType } from '../Store/Store';
-import { setIsLoggedInAC } from './authReducer';
+import { setIsLoggedIn } from './authReducer';
 import { Dispatch } from 'redux';
 import { authMeApi } from '../Api/TodoListsApi';
 
@@ -35,7 +35,7 @@ export const setIsInitializedAC = (isInitialized: boolean) => ({type:'APP/SET-IN
 export const initializeAppTC = () => (dispatch: Dispatch<ActionType>) => {
     authMeApi.me().then(res => {
         if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC(true));
+            dispatch(setIsLoggedIn({value: true}));
         }
     }).finally(() => {
         dispatch(setIsInitializedAC(true))

@@ -11,7 +11,8 @@ import {
 } from '../State/todoList-reducer';
 import thunk from 'redux-thunk';
 import { appReducer, setAppError, setAppStatus, setIsInitializedAC } from '../State/App-reducer';
-import { authReducer, setIsLoggedInAC } from '../State/authReducer';
+import { authReducer, setIsLoggedIn } from '../State/authReducer';
+import { configureStore } from '@reduxjs/toolkit';
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -19,7 +20,7 @@ import { authReducer, setIsLoggedInAC } from '../State/authReducer';
 
 
 export type ActionType =
-    | ReturnType<typeof setIsLoggedInAC>
+    | ReturnType<typeof setIsLoggedIn>
     | ReturnType<typeof daleteTodolistAC>
     | ReturnType<typeof addTodolistAC>
     | ReturnType<typeof updateTodoListTitleAC>
@@ -40,8 +41,14 @@ const rootReducer = combineReducers({
     app: appReducer,
     authReducer: authReducer
 })
+
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().prepend(thunk)
+})
 // непосредственно создаём store
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+/*export const store = createStore(rootReducer, applyMiddleware(thunk));*/
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<typeof rootReducer>
 export type AppDispatchType = Dispatch<ActionType>
