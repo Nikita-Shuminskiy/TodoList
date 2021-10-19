@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { Checkbox, IconButton } from '@material-ui/core';
-import { EditSpan } from '../../Components/EditSpan/EditSpan';
 import { Delete } from '@material-ui/icons';
 import { TaskStatuses } from '../../Api/TodoListsApi';
+import { EditableSpan } from '../../Components/EditableSpan/EditableSpan';
 
 
 export type TasksComponentType = {
@@ -44,7 +44,7 @@ export const Tasks = React.memo(({
                 color="primary"
                 onChange={onChangeHandlerWrapper}
             />
-            <EditSpan  statuses={status} title={titleEditInput} onChange={onChangeInputValueWrapper}/>
+            <EditableSpan  value={titleEditInput} onChange={onChangeInputValueWrapper}/>
             <IconButton onClick={removeTaskWrapper} size={'small'}>
                 <Delete fontSize={'medium'}/>
             </IconButton>

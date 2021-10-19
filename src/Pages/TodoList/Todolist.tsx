@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
 import { AddTodoListForm } from '../../Components/AddItemForm/AddTodoListForm';
-import { EditSpan } from '../../Components/EditSpan/EditSpan';
 import { Button, IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import { Tasks } from '../Tasks/Tasks';
@@ -9,6 +8,7 @@ import { fetchTasksThunk } from '../../State/task-reducer';
 import { useDispatch } from 'react-redux';
 import { RequestStatusType } from '../../State/App-reducer';
 import { TaskStatuses, TaskType } from '../../Api/TodoListsApi';
+import { EditableSpan } from '../../Components/EditableSpan/EditableSpan';
 
 type PropsTodoType = {
     titleTodoList: string
@@ -49,7 +49,6 @@ export const Todolist = React.memo(function (props: PropsTodoType) {
         props.delTodolist(props.idTodoList)
     }, [props.delTodolist, props.idTodoList])
 
-
     let tasksForTodolist = props.tasks
     if (props.filter === 'active') {
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.New)
@@ -57,13 +56,12 @@ export const Todolist = React.memo(function (props: PropsTodoType) {
     if (props.filter === 'completed') {
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
-
     return <div>
         <h3>
             <IconButton disabled={props.entityStatus === 'loading'} onClick={deleteTodoListWrapper}>
                 <Delete/>
             </IconButton>
-            <EditSpan title={props.titleTodoList} onChange={changeTitleValueNewWrapper}/>
+            <EditableSpan value={props.titleTodoList} onChange={changeTitleValueNewWrapper}/>
         </h3>
         <AddTodoListForm entityStatus={props.entityStatus} addItem={addTaskWrapper}/>
         <ul style={{listStyle: 'none'}}>

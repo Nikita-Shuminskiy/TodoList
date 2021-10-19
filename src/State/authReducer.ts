@@ -5,35 +5,20 @@ import { handleServerAppError, handleServerNetworkError } from '../Utils/Error-u
 import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction } from '@reduxjs/toolkit/dist/createAction';
 
-const initialState = {
-    isLoggedIn: false
-}
-type InitialStateType = typeof initialState
-
 const slice = createSlice({
     name: 'auth',
-    initialState: initialState,
+    initialState: {
+        isLoggedIn: false
+    },
     reducers: {
-        setIsLoggedIn(state:InitialStateType, action:PayloadAction<{ value: boolean }>) {
+        setIsLoggedIn(state: any, action:PayloadAction<{ value: boolean }>) {
             state.isLoggedIn = action.payload.value
         }
-
     }
 })
-
 export const authReducer = slice.reducer
-/*(state: InitialStateType = initialState, action: ActionType): InitialStateType => {
-    switch (action.type) {
-        case 'login/SET-IS-LOGGED-IN':
-            return {...state, isLoggedIn: action.value}
-        default:
-            return state
-
-    }
-}*/
 export const { setIsLoggedIn } = slice.actions
 // actions
-
 // thunks
 export const loginTC = (data: LoginParamsType) =>
     (dispatch: AppDispatchType) => {

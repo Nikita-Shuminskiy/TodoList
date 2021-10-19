@@ -23,11 +23,8 @@ import { logoutTC } from '../State/authReducer';
 
 
 const App = React.memo(function () {
-
-
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.authReducer.isLoggedIn)
-
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     const history = useHistory()
     const dispatch = useDispatch()
