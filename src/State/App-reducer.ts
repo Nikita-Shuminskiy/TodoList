@@ -8,7 +8,7 @@ import { PayloadAction } from '@reduxjs/toolkit/dist/createAction';
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 type InitialStateType = typeof initialState
 const initialState = {
-    status: 'loading' as RequestStatusType,
+    status: 'idle' as RequestStatusType,
     error: null as string | null,
     isInitialized: false
 }

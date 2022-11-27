@@ -1,10 +1,11 @@
 import React from 'react'
 import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid} from '@material-ui/core'
-import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginTC } from '../../State/authReducer';
-import { AppRootStateType } from '../../Store/Store';
-import { Redirect } from 'react-router-dom';
+import {useFormik} from 'formik';
+import {useDispatch, useSelector} from 'react-redux';
+import {loginTC} from '../../State/authReducer';
+import {AppRootStateType} from '../../Store/Store';
+import {Redirect} from 'react-router-dom';
+
 type FormikErrorType = {
     email?: string
     password?: string
@@ -29,7 +30,7 @@ export const Login = () => {
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address';
             }
-           if (values.password.length < 3) {
+            if (values.password.length < 3) {
                 errors.password = 'Pole to be 3 symbol';
             }
             return errors;
@@ -40,12 +41,12 @@ export const Login = () => {
         },
     })
 
-    if(isLoggedIn){
+    if (isLoggedIn) {
         return <Redirect to={'/'}/>
     }
 
-    return <Grid container justify="center">
-        <Grid item xs={4}>
+    return <Grid container justify={'center'} style={{marginTop: "60px"}}>
+        <Grid item xs={4} direction={'column'} alignItems={'center'}>
             <FormLabel>
                 <p>To log in get registered
                     <a href={'https://social-network.samuraijs.com/'}
@@ -57,7 +58,7 @@ export const Login = () => {
                 <p>Password: free</p>
             </FormLabel>
             <form onSubmit={formik.handleSubmit}>
-            <FormControl>
+                <FormControl>
                     <FormGroup>
                         <TextField
                             label="Email"
@@ -65,7 +66,7 @@ export const Login = () => {
                             {...formik.getFieldProps("email")}
 
                         />
-                        {formik.errors.email  ? <div> {formik.errors.email}</div> : null}
+                        {formik.errors.email ? <div> {formik.errors.email}</div> : null}
                         <TextField
                             label="Password"
                             margin="normal"
@@ -74,7 +75,7 @@ export const Login = () => {
                         />
                         {
                             formik.touched.email &&
-                            formik.errors.password  ? <div> {formik.errors.password}</div> : null}
+                            formik.errors.password ? <div> {formik.errors.password}</div> : null}
 
                         <FormControlLabel
                             label={'Remember me'}
@@ -85,7 +86,7 @@ export const Login = () => {
                         />
                         <Button type={'submit'} variant={'contained'} color={'primary'}>Login</Button>
                     </FormGroup>
-            </FormControl>
+                </FormControl>
             </form>
         </Grid>
     </Grid>
